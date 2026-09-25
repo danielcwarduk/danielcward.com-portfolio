@@ -1,0 +1,505 @@
+/* ==========================================================================
+   danielcward.com — Global Styles
+
+   Four jobs only:
+     1. tokens   — the authored values, once
+     2. reset    — normalisation
+     3. text     — the type styles, defined once, consumed by class
+     4. utility  — inverse scope, layout helpers, focus, motion
+
+   Components own their own layout and read type + colour from here.
+   Breakpoints: 768px (compact) and 1280px (board). No others.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Core palette — the only authored colours */
+  --core-olive: #3f4a24;
+  --core-cream: #f6efe3;
+  /* Burnt orange. Held at hue 45.7deg in OKLCH with in-gamut chroma 0.153.
+     The brighter #e86f2d could not carry a label: cream on it was 2.73:1 and
+     olive on it 3.04:1, so the accent pill failed AA with any text colour. */
+  --core-orange: #b34a00;
+
+  /* Derived colours are written as the hex they resolve to, not as the
+     color-mix() that produced them. Every one of these was `color-mix(in
+     oklab, …)` until the contrast script needed a colour it could read; a
+     value the checker cannot see is a value nothing verifies. The mix
+     percentage that produced each is noted so an edit has a starting point. */
+
+  /* Backgrounds */
+  --bg: var(--core-cream);
+  --bg-subtle: #dedaca; /* olive 12% over cream */
+  --bg-inverse: var(--core-olive);
+  --bg-accent: var(--core-orange);
+
+  /* Foreground — .on-inverse re-points these, nothing else needs to know */
+  --fg: var(--core-olive);
+  --fg-muted: #565f3d; /* olive 86% over cream */
+
+  /* Accent for TEXT, not for fills. Darkened further than the fill so a small
+     label stays readable against cream (6.42:1, and 5.23:1 on --bg-subtle).
+     Not for use on olive — .on-inverse re-points it to the light counterpart,
+     which is 4.80:1 there. Use --core-orange / --bg-accent for fills only. */
+  --fg-accent-text: #754e1d; /* orange 45% with olive */
+
+  /* Borders. --border and --border-muted are decorative rules only and are
+     deliberately faint; they are not control boundaries, so they are exempt
+     from the 3:1 non-text requirement. --border-hairline sits on .card--plain,
+     which is one big click target, so that one is darkened to clear 3:1. */
+  --border: #c4c3b0; /* olive 25% over cream */
+  --border-muted: #888d71; /* olive 57% over cream */
+  --border-hairline: 1px solid #767c5d; /* olive 70% over cream */
+
+  /* Typography — families */
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Typography — display scale (Bricolage Grotesque 700) */
+  --type-display-xl-size: clamp(56px, calc(4.42vw + 39.4px), 96px);
+  --type-display-xl-line: 0.95;
+  --type-display-lg-size: clamp(44px, calc(3.09vw + 32.4px), 72px);
+  --type-display-lg-line: 0.95;
+  --type-display-md-size: clamp(34px, calc(1.33vw + 29px), 46px);
+  --type-display-md-line: 1.05;
+  --type-heading-lg-size: clamp(32px, calc(1.11vw + 27.8px), 42px);
+  --type-heading-lg-line: 1.04;
+  --type-heading-md-size: clamp(26px, calc(0.44vw + 24.4px), 30px);
+  --type-heading-md-line: 1.05;
+  --type-heading-sm-size: clamp(24px, calc(0.44vw + 22.4px), 28px);
+  --type-heading-sm-line: 1.04;
+  --type-heading-xs-size: clamp(23px, calc(0.44vw + 21.4px), 27px);
+  --type-heading-xs-line: 1.05;
+
+  /* Typography — body scale (Inter 400) */
+  --type-body-lg-size: 22px;
+  --type-body-lg-line: 1.3;
+  --type-body-md-size: 19px;
+  --type-body-md-line: 1.5;
+  --type-body-size: 17px;
+  --type-body-line: 1.5;
+  --type-body-sm-size: 16px;
+  --type-body-sm-line: 1.45;
+  --type-body-xs-size: 14px;
+  --type-body-xs-line: 1.45;
+  --type-meta-size: 13px;
+  --type-meta-line: 1.15;
+  --type-fine-size: 12px;
+  --type-fine-line: 1.2;
+
+  /* Typography — tracking */
+  --tracking-label: 0.6px;
+  --tracking-tight: 0.45px;
+
+  /* Spacing */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: clamp(12px, calc(0.44vw + 10.4px), 16px);
+  --space-md: clamp(18px, calc(0.66vw + 15.5px), 24px);
+  --space-lg: clamp(24px, calc(0.88vw + 20.7px), 32px);
+  --space-xl: clamp(36px, calc(1.33vw + 31px), 48px);
+  --space-2xl: clamp(48px, calc(1.77vw + 41.4px), 64px);
+  --space-3xl: clamp(64px, calc(3.54vw + 50.7px), 96px);
+
+  /* Radii */
+  --radius-sm: 12px;
+  --radius-md: 24px;
+  --radius-pill: 999px;
+
+  /* Measure — the one place a readable line length is decided */
+  --measure: 68ch;
+
+  /* Layout */
+  --layout-board: 1280px;
+  --layout-gutter: clamp(24px, 5vw, 64px);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --duration-fast: 150ms;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd,
+hr {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. Text styles
+
+   Every run of text on the site is one of these. Components add colour and
+   measure; they never re-declare a family, weight, size or line height.
+   None of these set a colour, so the .on-inverse scope reaches all of them.
+   -------------------------------------------------------------------------- */
+
+.display-xl,
+.display-lg,
+.display-md,
+.heading-lg,
+.heading-md,
+.heading-sm,
+.heading-xs {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.display-xl {
+  font-size: var(--type-display-xl-size);
+  line-height: var(--type-display-xl-line);
+}
+
+.display-lg {
+  font-size: var(--type-display-lg-size);
+  line-height: var(--type-display-lg-line);
+}
+
+.display-md {
+  font-size: var(--type-display-md-size);
+  line-height: var(--type-display-md-line);
+}
+
+.heading-lg {
+  font-size: var(--type-heading-lg-size);
+  line-height: var(--type-heading-lg-line);
+}
+
+.heading-md {
+  font-size: var(--type-heading-md-size);
+  line-height: var(--type-heading-md-line);
+}
+
+.heading-sm {
+  font-size: var(--type-heading-sm-size);
+  line-height: var(--type-heading-sm-line);
+}
+
+.heading-xs {
+  font-size: var(--type-heading-xs-size);
+  line-height: var(--type-heading-xs-line);
+}
+
+.body-lg {
+  font-size: var(--type-body-lg-size);
+  line-height: var(--type-body-lg-line);
+}
+
+.body-md {
+  font-size: var(--type-body-md-size);
+  line-height: var(--type-body-md-line);
+}
+
+.body-sm {
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.body-xs {
+  font-size: var(--type-body-xs-size);
+  line-height: var(--type-body-xs-line);
+}
+
+.meta {
+  font-size: var(--type-meta-size);
+  line-height: var(--type-meta-line);
+}
+
+.fine {
+  font-size: var(--type-fine-size);
+  line-height: var(--type-fine-line);
+}
+
+/* Uppercase, tracked — eyebrow labels, meta rows, button labels.
+   12px, not 10 or 11: uppercase plus tracking at those sizes is where these
+   labels stop being comfortably readable, and several carry real content
+   (roles, years, field names). */
+.label,
+.label-md {
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+}
+
+.label {
+  font-size: var(--type-fine-size);
+  line-height: var(--type-fine-line);
+}
+
+.label-md {
+  font-size: var(--type-meta-size);
+  line-height: var(--type-meta-line);
+}
+
+/* The small "read more"-style link label */
+.micro-tag {
+  font-size: var(--type-fine-size);
+  line-height: var(--type-fine-line);
+  letter-spacing: var(--tracking-tight);
+}
+
+/* Rendered markdown. Markdown gives us elements, not the site's type scale, so
+   the scale is re-applied here. Nothing sets a colour. */
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: var(--measure);
+}
+
+.prose h2,
+.prose h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  margin-block-start: var(--space-md);
+  text-wrap: balance;
+}
+
+.prose h2 {
+  font-size: var(--type-heading-md-size);
+  line-height: var(--type-heading-md-line);
+}
+
+.prose h3 {
+  font-size: var(--type-heading-sm-size);
+  line-height: var(--type-heading-sm-line);
+}
+
+.prose ul,
+.prose ol {
+  padding-inline-start: 1.4em;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  list-style: revert;
+}
+
+.prose li::marker {
+  color: var(--fg-muted);
+}
+
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+
+.prose pre {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  background: var(--bg-subtle);
+  overflow-x: auto;
+}
+
+.prose pre code {
+  font-size: var(--type-body-sm-size);
+}
+
+.prose blockquote {
+  padding-inline-start: var(--space-md);
+  border-inline-start: 2px solid var(--border-muted);
+  color: var(--fg-muted);
+}
+
+.prose img {
+  border-radius: var(--radius-md);
+}
+
+.prose hr {
+  border: 0;
+  border-top: var(--border-hairline);
+}
+
+/* --------------------------------------------------------------------------
+   4. Utilities
+   -------------------------------------------------------------------------- */
+
+/* The fixed-width board, its gutter, and the 96px section rhythm every page is
+   built on. Sources: Home / Blog / Client Work / Lab / Desktop —
+   board 1280 wide, horizontal padding 64 → content 1152. */
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xl);
+  width: 100%;
+  max-width: var(--layout-board);
+  margin-inline: auto;
+  padding: 0 var(--layout-gutter) var(--space-3xl);
+}
+
+/* The inverted surface. Every panel sets this once and all of its text,
+   borders and links follow — no per-element colour overrides anywhere. */
+.on-inverse {
+  --fg: var(--core-cream);
+  /* 70% cream, not 65%: 65% lands at 4.38:1 on olive and misses AA */
+  --fg-muted: #bbbaa6; /* cream 70% over olive */
+  --fg-accent-text: #e0ae92; /* orange 40% with cream */
+  /* Every border here is knocked back with olive, which is the surface it
+     sits on — olive-on-olive rendered these rules invisible (1.00:1). They
+     are knocked back with cream instead. */
+  --border: #91947a; /* cream 45% over olive */
+  --border-muted: #a4a58d; /* cream 55% over olive */
+  --border-hairline: 1px solid #91947a; /* cream 45% over olive */
+
+  background: var(--bg-inverse);
+  color: var(--fg);
+}
+
+.stack-sm,
+.stack-md,
+.stack-lg {
+  display: flex;
+  flex-direction: column;
+}
+
+.stack-sm {
+  gap: var(--space-sm);
+}
+
+.stack-md {
+  gap: var(--space-md);
+}
+
+.stack-lg {
+  gap: var(--space-lg);
+}
+
+/* Pulls a stack's gap in on both sides of a single element, so metadata hugs
+   the header above it and the prose below it. */
+.tight-both {
+  margin-block: calc(-1 * var(--space-xs));
+}
+
+/* A muted paragraph of intro copy under a section heading */
+.intro {
+  color: var(--fg-muted);
+  max-width: var(--measure);
+}
+
+/* A muted metadata row — date · reading time, and the like */
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--fg-muted);
+}
+
+/* --------------------------------------------------------------------------
+   5. Focus
+
+   The ring sits outside the border box, so it always reads against the page
+   background rather than the control's own fill.
+   -------------------------------------------------------------------------- */
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+}
+
+/* Off-screen until focused, then pinned to the top-left of the viewport.
+   Not `display: none` — that would remove it from the tab order entirely. */
+.skip-link {
+  position: absolute;
+  z-index: 1;
+  top: var(--space-sm);
+  left: var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-pill);
+  background: var(--bg-inverse);
+  color: var(--core-cream);
+  transform: translateY(calc(-100% - var(--space-lg)));
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   6. Forced colours
+
+   Windows High Contrast overrides our backgrounds and text, which can leave
+   the token-driven focus ring with nothing to contrast against. Hand the ring
+   back to the system so it is always visible there.
+   -------------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Responsive
+   -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
