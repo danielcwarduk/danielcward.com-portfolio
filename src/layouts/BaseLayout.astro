@@ -1,0 +1,158 @@
+---
+/**
+ * BaseLayout — document shell shared by every page.
+ *
+ * The current page is derived from the URL by Nav, so nothing has to thread
+ * a `current` prop through every page.
+ *
+ * Also the single place head metadata is declared: canonical, Open Graph,
+ * Twitter cards, and JSON-LD. Every page routes its own schema through the
+ * `schema` prop rather than adding a second <script> of its own, so the
+ * @graph stays a single valid document.
+ */
+
+import '@fontsource-variable/inter';
+import '@fontsource-variable/bricolage-grotesque';
+import '../styles/global.css';
+
+import Nav from '../components/Nav.astro';
+import { navLinks, personId, site, websiteId } from '../data/content';
+
+interface Props {
+	/**
+	 * Short page title, without the site suffix — BaseLayout appends it. The
+	 * home page has no title of its own; its <title> is the name plus role.
+	 */
+	title?: string;
+	description?: string;
+	/** 'website' for top-level pages, 'article' for dated posts. */
+	type?: 'website' | 'article';
+	/** ISO date, article pages only. */
+	publishedTime?: string;
+	/** JSON-LD nodes merged into the site-level @graph. */
+	schema?: Record<string, unknown>[];
+	noindex?: boolean;
+}
+
+const {
+	title,
+	description = site.description,
+	type = 'website',
+	publishedTime,
+	schema = [],
+	noindex = false,
+} = Astro.props;
+
+// Canonical is built from the configured `site`, never from the request
+// host — behind a preview or CDN proxy the host is not the production one.
+const origin = Astro.site ?? new URL('https://danielcward.com');
+
+// `trailingSlash: 'always'` means Astro already resolves the request path to
+// the directory form the host serves — /work/, /notes/<slug>/ — so the
+// canonical matches the sitemap and the built file with no normalising.
+const canonical = new URL(Astro.url.pathname, origin).href;
+const shareImage = new URL('/og-default.png', origin).href;
+
+/*
+ * Written here rather than measured: og:image:width/height must be declared
+ * for the card to lay out without guessing, and the file lives in public/,
+ * which the build copies rather than imports.
+ */
+const shareImageSize = { width: '1200', height: '630' };
+
+const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'Person',
+			'@id': personId,
+			name: site.name,
+			url: Astro.site?.href,
+			email: `mailto:${site.email}`,
+			jobTitle: 'Web developer',
+			description: site.description,
+			sameAs: [
+				'https://linkedin.com/in/danielcward',
+				'https://github.com/danielcward',
+			],
+			knowsAbout: [
+				'Web development',
+				'Front-end architecture',
+				'Shader programming',
+				'Photography',
+			],
+		},
+		{
+			'@type': 'WebSite',
+			'@id': websiteId,
+			url: Astro.site?.href,
+			name: site.name,
+			description: site.description,
+			inLanguage: 'en-GB',
+			publisher: { '@id': personId },
+		},
+		...schema,
+	],
+};
+---
+
+<!doctype html>
+<html lang="en-GB">
+	<head>
+		<meta charset="utf-8" />
+		<!-- Rasters first, SVG last: browsers take the last matching rel="icon", so
+     the SVG wins where it is supported. The SVG flips on its own via
+     prefers-color-scheme; an ICO cannot, hence the dark one under `media`.
+     Safari reads no SVG favicon at all and lands on the rasters. -->
+<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" href="/favicon-dark.ico" media="(prefers-color-scheme: dark)" sizes="any" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="manifest" href="/site.webmanifest" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{fullTitle}</title>
+		<meta name="description" content={description} />
+		{!noindex && <link rel="canonical" href={canonical} />}
+		{noindex && <meta name="robots" content="noindex, follow" />}
+
+		<meta property="og:type" content={type} />
+		<meta property="og:site_name" content={site.name} />
+		<meta property="og:title" content={fullTitle} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={shareImage} />
+		<meta property="og:image:width" content={shareImageSize.width} />
+		<meta property="og:image:height" content={shareImageSize.height} />
+		<meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
+		<meta property="og:locale" content="en_GB" />
+		{publishedTime && (
+			<meta property="article:published_time" content={publishedTime} />
+		)}
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={fullTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={shareImage} />
+
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title={`Notes — ${site.name}`}
+			href={new URL('/rss.xml', origin).href}
+		/>
+
+		<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Skip to content</a>
+		<Nav links={navLinks} brand={site.name} />
+		<main id="main" tabindex="-1">
+			<slot />
+		</main>
+	</body>
+</html>
