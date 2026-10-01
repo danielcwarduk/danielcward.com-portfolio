@@ -1,0 +1,69 @@
+---
+/**
+ * Band — feature panel with copy and an action.
+ *
+ * Sources: band / client-work (5px olive stroke),
+ *          band / concepts-demos (fill #dfe3cf, 1px olive stroke)
+ */
+
+import Button from './Button.astro';
+import type { Action } from '../data/content';
+
+interface Props {
+	title: string;
+	summary: string;
+	action: Action;
+	variant?: 'solid' | 'outlined' | 'heavy';
+}
+
+const { title, summary, action, variant = 'solid' } = Astro.props;
+---
+
+<section class:list={['band', variant !== 'solid' && `band--${variant}`]}>
+	<div class="band__copy">
+		<h2 class="band__title display-lg">{title}</h2>
+
+		<p class="band__summary">{summary}</p>
+
+		<div class="band__actions">
+			<Button href={action.href} variant="accent">{action.label}</Button>
+		</div>
+	</div>
+</section>
+
+<style>
+	.band {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+		align-items: center;
+		gap: var(--space-2xl);
+		padding: var(--space-3xl);
+		border-radius: var(--radius-md);
+		background: var(--bg);
+	}
+
+	.band--outlined {
+		background: var(--bg-subtle);
+		border: var(--border-hairline);
+	}
+
+	.band--heavy {
+		border: var(--border-hairline);
+	}
+
+	.band__copy {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		flex: 1 1 auto;
+	}
+
+	.band__summary {
+		color: var(--fg-muted);
+		max-width: var(--measure);
+	}
+
+	.band__actions {
+		margin-top: var(--space-xs);
+	}
+</style>

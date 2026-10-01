@@ -1,0 +1,112 @@
+---
+/**
+ * Panel — the inverted surface used for the home footer and the contact page.
+ * They were the same panel at two sizes, with different optional rows.
+ *
+ * Sources: panel / footer (home, 1152 × 376),
+ *          panel / contact-card (contact, 1072 × 772)
+ */
+
+import Button from './Button.astro';
+import Divider from './Divider.astro';
+import type { Field } from '../data/content';
+
+interface Props {
+	title: string;
+	level?: 1 | 2;
+	subtitle?: string;
+	bio?: string;
+	fields?: Field[];
+	cta?: { label: string; href: string };
+}
+
+const { title, level = 2, subtitle, bio, fields, cta } = Astro.props;
+---
+
+<section class="panel on-inverse">
+	{
+		level === 1 ? (
+			<h1 class="display-lg">{title}</h1>
+		) : (
+			<h2 class="display-lg">{title}</h2>
+		)
+	}
+
+	{subtitle && <p class="panel__subtitle body-lg">{subtitle}</p>}
+	{bio && <p class="panel__bio">{bio}</p>}
+
+	{
+		fields && fields.length > 0 && (
+			<Fragment>
+				<Divider />
+				<div class="panel__fields">
+					{fields.map(({ label, value, href }) => (
+						<div class="field">
+							<p class="field__label label">{label}</p>
+							{href ? (
+								<a class="field__value" href={href}>
+									{value}
+								</a>
+							) : (
+								<p class="field__value">{value}</p>
+							)}
+						</div>
+					))}
+				</div>
+			</Fragment>
+		)
+	}
+
+	{
+		cta && (
+			<div class="panel__foot">
+				<Button href={cta.href} variant="accent">{cta.label}</Button>
+			</div>
+		)
+	}
+</section>
+
+<style>
+	.panel {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		padding: clamp(var(--space-xl), 7.5vw, var(--space-3xl));
+		border-radius: clamp(24px, calc(0.88vw + 20.7px), 32px);
+	}
+
+	.panel__bio {
+		color: var(--fg-muted);
+		max-width: var(--measure);
+	}
+
+	.panel__fields {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: var(--space-lg);
+		padding-block: var(--space-xs);
+	}
+
+	/* break-word, not anywhere: only break when the value genuinely cannot
+	   fit, so URLs do not split mid-word */
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2xs);
+		min-width: 0;
+	}
+
+	.field__value {
+		color: var(--fg);
+		overflow-wrap: break-word;
+		transition: color var(--duration-fast) var(--ease-standard);
+	}
+
+	a.field__value:hover {
+		color: var(--fg-accent-text);
+	}
+
+	.panel__foot {
+		margin-top: var(--space-xs);
+	}
+</style>

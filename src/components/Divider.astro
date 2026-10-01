@@ -1,0 +1,33 @@
+---
+/**
+ * Divider — hairline rule.
+ *
+ * Sources: divider / nav + meta (default), divider / entry (muted),
+ *          divider / hairline (inside an .on-inverse panel).
+ */
+
+export type Tone = 'default' | 'muted';
+
+interface Props {
+	tone?: Tone;
+}
+
+const { tone = 'default' } = Astro.props;
+---
+
+<hr class:list={['divider', `divider--${tone}`]} />
+
+<style>
+	/* border-top, not background: forced-colors mode discards backgrounds
+	   entirely, which was making these rules vanish under Windows High
+	   Contrast. Border colours are mapped to CanvasText for us. */
+	.divider {
+		height: 0;
+		border: 0;
+		border-top: 1px solid var(--border);
+	}
+
+	.divider--muted {
+		border-top-color: var(--border-muted);
+	}
+</style>

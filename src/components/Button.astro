@@ -1,0 +1,70 @@
+---
+/**
+ * Button — pill action. Renders an anchor when given an href, a button
+ * otherwise; there is nothing to choose.
+ *
+ * Sources: button / primary (accent), button / secondary (solid),
+ *          link / all-posts (inverse).
+ */
+
+export type Variant = 'accent' | 'solid' | 'inverse';
+
+interface Props {
+	href: string;
+	variant?: Variant;
+}
+
+const { href, variant = 'accent' } = Astro.props;
+---
+
+<a class:list={['btn', 'label-md', `btn--${variant}`]} href={href}>
+	<slot />
+</a>
+
+<style>
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-sm) var(--space-lg);
+		border: 0;
+		border-radius: var(--radius-pill);
+		cursor: pointer;
+		white-space: nowrap;
+		transition:
+			background-color var(--duration-fast) var(--ease-standard),
+			filter var(--duration-fast) var(--ease-standard);
+	}
+
+	/* A button sets its own surface, so it sets its own foreground too —
+	   it must not inherit --fg from an .on-inverse ancestor.
+	   Cream on the burnt orange is 4.72:1. */
+	.btn--accent {
+		background: var(--bg-accent);
+		color: var(--core-cream);
+	}
+
+	/* Darken on hover, do not brighten: the fill is darker than the label, so
+	   brightness() above 1 walks the label down toward AA. */
+	.btn--accent:hover {
+		filter: brightness(0.94);
+	}
+
+	.btn--solid {
+		background: var(--core-cream);
+		color: var(--core-olive);
+	}
+
+	.btn--solid:hover {
+		filter: brightness(0.96);
+	}
+
+	.btn--inverse {
+		background: var(--core-olive);
+		color: var(--core-cream);
+	}
+
+	.btn--inverse:hover {
+		background: #564c22; /* orange 18% with olive */
+	}
+</style>

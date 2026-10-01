@@ -1,0 +1,126 @@
+---
+/**
+ * Card — the one card for posts, demos and client work. They differed only
+ * in surface, title size and which rows were present.
+ *
+ * Sources: post / tooling (home carousel), demo / * (lab),
+ *          case / captain-cycles, case / captain-t (work)
+ */
+
+import Divider from './Divider.astro';
+
+type Tone = 'plain' | 'subtle' | 'inverse';
+type Size = 'lg' | 'md' | 'sm';
+
+interface Props {
+	/** Omitted for records with no live page yet — renders the title as text. */
+	href?: string;
+	title: string;
+	copy?: string;
+	meta?: string;
+	cta?: string;
+	tone?: Tone;
+	size?: Size;
+}
+
+const {
+	href,
+	title,
+	copy,
+	meta,
+	cta,
+	tone = 'subtle',
+	size = 'md',
+} = Astro.props;
+---
+
+<article class:list={['card', `card--${tone}`, tone === 'inverse' && 'on-inverse']}>
+	<h3 class:list={['card__title', `heading-${size}`]}>
+		{href ? <a class="card__link" href={href}>{title}</a> : title}
+	</h3>
+
+	{copy && <p class="card__copy body-sm">{copy}</p>}
+
+	<Divider tone="muted" />
+
+	<div class="card__foot">
+		{meta && <p class="card__meta label">{meta}</p>}
+		{
+			cta &&
+				(href ? (
+					<p class="card__cta micro-tag">
+						{cta}
+						<span aria-hidden="true"> ↗</span>
+					</p>
+				) : (
+					<p class="card__cta micro-tag card__cta--pending">In progress</p>
+				))
+		}
+	</div>
+</article>
+
+<style>
+	.card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+		padding: var(--space-lg);
+		border-radius: var(--radius-md);
+		transition: transform var(--duration-fast) var(--ease-standard);
+	}
+
+	/* Hover is a lift, not a colour change. The accent was 2.73:1 on cream
+	   and 2.22:1 on --bg-subtle — it cannot carry the title text. */
+	.card:hover {
+		transform: scale(1.01);
+	}
+
+	.card--plain {
+		background: var(--bg);
+		border: var(--border-hairline);
+	}
+
+	.card--subtle {
+		background: var(--bg-subtle);
+	}
+
+	.card--inverse {
+		color: var(--fg);
+	}
+
+	.card__meta {
+		color: var(--fg-muted);
+	}
+
+	.card__title {
+		color: var(--fg);
+	}
+
+	/* One link per card: the title, stretched over the whole surface. */
+	.card__link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+
+	.card__copy {
+		color: var(--fg-muted);
+	}
+
+	.card__foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-md);
+		margin-top: auto;
+	}
+
+	.card__cta {
+		color: var(--fg);
+	}
+
+	.card__cta--pending {
+		color: var(--fg-muted);
+	}
+</style>
