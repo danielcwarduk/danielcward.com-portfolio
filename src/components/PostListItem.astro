@@ -1,0 +1,106 @@
+---
+/**
+ * PostListItem — one row in the notes index.
+ *
+ * Source: post / tooling (Blog / Desktop), 1152 × 143
+ */
+
+import Divider from './Divider.astro';
+
+interface Props {
+	/** Omitted while the post is unwritten — the title renders as plain text. */
+	href?: string;
+	title: string;
+	excerpt: string;
+	date: string;
+	isoDate: string;
+	readingTime: string;
+	published?: boolean;
+}
+
+const { href, title, excerpt, date, isoDate, readingTime, published = true } =
+	Astro.props;
+---
+
+<article class="post-row">
+	{/* The body is the link target; the divider sits outside it, so the rule
+	    between entries stays a separator rather than part of either entry. */}
+	<div class="post-row__body">
+		<h3 class="post-row__title heading-xs">
+			{href ? <a href={href}>{title}</a> : title}
+		</h3>
+
+		<p class="post-row__excerpt">{excerpt}</p>
+
+		<p class="post-row__meta meta-row fine">
+			{/* An unwritten post has no meaningful publication date, so the
+			    status leads rather than a date that has not happened yet. */}
+			{published ? (
+				<>
+					<time datetime={isoDate}>{date}</time>
+					<span aria-hidden="true">·</span>
+					<span>{readingTime}</span>
+				</>
+			) : (
+				<span>Still being written</span>
+			)}
+		</p>
+	</div>
+
+	<Divider tone="muted" />
+</article>
+
+<style>
+	.post-row {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		padding-top: var(--space-md);
+	}
+
+	.post-row__body {
+		display: flex;
+		flex-direction: column;
+		/* Same rhythm as Card (work / lab / post cards): title, body, time. */
+		gap: var(--space-sm);
+		/* Containing block for the stretched link below. */
+		position: relative;
+	}
+
+	.post-row__title {
+		color: var(--fg);
+	}
+
+	/* The whole entry is one target, so the title link's hit area is stretched
+	   over the excerpt and meta. The divider is outside this wrapper, so it
+	   stays click-through rather than belonging to the entry above it. */
+	.post-row__title a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+
+	/* Focus is on the title link, so the ring is drawn on the stretched area —
+	   otherwise keyboard users get a box around the heading only. */
+	.post-row__title a:focus-visible::after {
+		outline: 2px solid var(--fg-accent-text);
+		outline-offset: var(--space-xs);
+		border-radius: 2px;
+	}
+
+	.post-row__excerpt,
+	.post-row__meta {
+		color: var(--fg-muted);
+	}
+
+	/* Hover anywhere on the entry turns the whole entry, not just the title. */
+	.post-row:has(a:hover) .post-row__title,
+	.post-row:has(a:hover) .post-row__excerpt,
+	.post-row:has(a:hover) .post-row__meta {
+		color: var(--fg-accent-text);
+	}
+
+	.post-row__excerpt {
+		max-width: var(--measure);
+	}
+</style>

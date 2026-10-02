@@ -1,0 +1,75 @@
+---
+/**
+ * PostCarousel — the horizontal post track on the home page.
+ *
+ * Source: carousel / latest-track (flex row, gap 24, cards 368 wide)
+ *
+ * Native scrolling plus scroll-snap does the work. There are no prev/next
+ * buttons and no pagination dots, because there was nothing behind them:
+ * no script, no tab panels, no state.
+ */
+
+import Card from './Card.astro';
+import { formatDate, type Note } from '../data/collections';
+
+interface Props {
+	notes: Note[];
+}
+
+const { notes } = Astro.props;
+---
+
+<div
+	class="carousel__track"
+	role="group"
+	aria-label="Latest posts"
+	tabindex="0"
+>
+	{
+		notes.map((note) => (
+			<Card
+				href={note.data.published ? `/notes/${note.id}/` : undefined}
+				title={note.data.title}
+				copy={note.data.excerpt}
+				meta={formatDate(note.data.date)}
+				cta="Read post"
+				tone="plain"
+			/>
+		))
+	}
+</div>
+
+<style>
+	.carousel__track {
+		display: grid;
+		grid-auto-flow: column;
+		grid-auto-columns: clamp(280px, 82vw, 368px);
+		gap: var(--space-md);
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scrollbar-width: none;
+		/* room for the focus ring, which overflow-x would otherwise clip */
+		padding: var(--space-2xs);
+		margin: calc(var(--space-2xs) * -1);
+		/* keeps the ring and the snapped card clear of the track edge */
+		scroll-padding: var(--space-2xs);
+	}
+
+	/* Every card in the track snaps to the start edge */
+	.carousel__track > * {
+		scroll-snap-align: start;
+	}
+
+	.carousel__track::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* The track is in the tab order because it scrolls, so it needs its own
+	   indicator. It sits inside the padded box, so the 2px offset clears the
+	   card ring rather than sitting under it. */
+	.carousel__track:focus-visible {
+		outline: 2px solid var(--fg);
+		outline-offset: 2px;
+		border-radius: var(--radius-sm);
+	}
+</style>

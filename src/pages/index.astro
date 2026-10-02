@@ -1,0 +1,71 @@
+---
+/**
+ * Home — built from the "Home / Desktop" board in Penpot.
+ * Sections, in order: hero / field, latest posts carousel,
+ * client-work + concepts bands, photography, footer panel.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Band from '../components/Band.astro';
+import Hero from '../components/Hero.astro';
+import Panel from '../components/Panel.astro';
+import PostCarousel from '../components/PostCarousel.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { notes } from '../data/collections';
+import { contactFields, site } from '../data/content';
+---
+
+<BaseLayout description={site.description}>
+	<div class="board">
+		<Hero
+			heading={site.name}
+			role={site.role}
+			lead="I design and build software for the web: client work, tools, and experiments. Currently deep in shaders and photo archives."
+			primary={{ label: 'See my work', href: '/work/' }}
+			secondary={{ label: 'Get in touch', href: '/contact/' }}
+		/>
+
+		<section class="stack-lg">
+			<SectionHeader
+				title="My notes"
+				action={{ label: 'All notes', href: '/notes/' }}
+			/>
+			<p class="intro body-md">
+				The insights and notes I don't want to lose and may help others too.
+			</p>
+			<PostCarousel notes={notes.slice(0, 3)} />
+		</section>
+
+		<div class="stack-md">
+			<Band
+				title="Client Work"
+				summary="Production builds for real clients: web apps, marketing sites, and the unglamorous plumbing that keeps them standing."
+				action={{ label: 'See client work', href: '/work/' }}
+				variant="heavy"
+			/>
+			<Band
+				title="Concepts & Demos"
+				summary="Self-directed concepts and interactive demos. Nothing shipped, everything learned."
+				action={{ label: 'Explore concepts', href: '/lab/' }}
+				variant="outlined"
+			/>
+		</div>
+
+		<section class="stack-lg">
+			<SectionHeader
+				title="Also, photos"
+				action={{ label: 'Browse the gallery', href: site.photosUrl }}
+			/>
+			<p class="intro body-md">
+				On a different site, I also post my pictures. Mostly landscapes and
+				street work, shot slowly and edited less than you'd think.
+			</p>
+		</section>
+
+		<Panel
+			title="What are you working on?"
+			fields={contactFields}
+			cta={{ label: 'Send an email', href: `mailto:${site.email}` }}
+		/>
+	</div>
+</BaseLayout>
