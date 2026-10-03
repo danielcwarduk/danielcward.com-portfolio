@@ -1,0 +1,47 @@
+---
+/**
+ * Notes index — built from the "Blog / Desktop" board in Penpot.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactLink from '../../components/ContactLink.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import PostListItem from '../../components/PostListItem.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import { formatDate, isoDate, notes } from '../../data/collections';
+---
+
+<BaseLayout
+	title="Notes"
+	description="The insights and notes I don't want to lose and may help others too based on Daniel C. Ward's web development work: front-end architecture, DevOps, and photography archives."
+>
+	<div class="board">
+		<PageHeader
+			title="Notes"
+			intro="The insights and notes I don't want to lose and may help others."
+
+		/>
+
+		<section class="stack-lg">
+			<SectionHeader title="Writing" level="lg" />
+
+			<div>
+				{
+					notes.map((note) => (
+						<PostListItem
+							href={note.data.published ? `/notes/${note.id}/` : undefined}
+							published={note.data.published}
+							title={note.data.title}
+							excerpt={note.data.excerpt}
+							date={formatDate(note.data.date)}
+							isoDate={isoDate(note.data.date)}
+							readingTime={note.data.readingTime}
+						/>
+					))
+				}
+			</div>
+		</section>
+
+		<ContactLink prompt="Have a question or an idea?" />
+	</div>
+</BaseLayout>

@@ -1,0 +1,69 @@
+---
+/**
+ * A note, rendered from its markdown file in src/content/notes.
+ *
+ * Only published notes get a route. A `published: false` file stays listed on
+ * the index as plain text, but no thin page is emitted for it and nothing links
+ * at a 404.
+ */
+
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { formatDate, isoDate } from '../../data/collections';
+import { breadcrumbs, personId, site, websiteId } from '../../data/content';
+
+export async function getStaticPaths() {
+	const notes = await getCollection('notes', ({ data }) => data.published);
+
+	return notes.map((note) => ({ params: { slug: note.id }, props: { note } }));
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+
+const path = `/notes/${note.id}/`;
+const date = formatDate(note.data.date);
+const iso = isoDate(note.data.date);
+---
+
+<BaseLayout
+	title={note.data.title}
+	description={note.data.excerpt}
+	type="article"
+	publishedTime={iso}
+	schema={[
+		{
+			'@type': 'BlogPosting',
+			'@id': `${site.url}${path}#post`,
+			mainEntityOfPage: { '@type': 'WebPage', '@id': `${site.url}${path}` },
+			headline: note.data.title,
+			description: note.data.excerpt,
+			// Required for Article rich results. Same asset the card uses.
+			image: `${site.url}/og-default.png`,
+			datePublished: iso,
+			url: `${site.url}${path}`,
+			author: { '@id': personId },
+			publisher: { '@id': personId },
+			inLanguage: 'en-GB',
+			isPartOf: { '@id': websiteId },
+		},
+		breadcrumbs('Notes', '/notes/', path, note.data.title),
+	]}
+>
+	<div class="board">
+		<div class="stack-sm">
+			<PageHeader title={note.data.title} intro={note.data.excerpt} />
+
+			<p class="meta-row body-xs tight-both">
+				<time datetime={iso}>{date}</time>
+				<span aria-hidden="true">·</span>
+				<span>{note.data.readingTime}</span>
+			</p>
+
+			<div class="prose body-md">
+				<Content />
+			</div>
+		</div>
+	</div>
+</BaseLayout>
