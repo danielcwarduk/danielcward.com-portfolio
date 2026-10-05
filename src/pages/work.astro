@@ -1,0 +1,49 @@
+---
+/**
+ * Client Work — built from the "Client Work / Desktop" board in Penpot.
+ *
+ * The list and the case studies are markdown files in src/content/work; the
+ * frontmatter drives the card, the body is the case study.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/Card.astro';
+import ContactLink from '../components/ContactLink.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { cases } from '../data/collections';
+---
+
+<BaseLayout
+	title="Client Work"
+	description="Production web work by Daniel C. Ward: a custom WordPress service site for a bike repair shop, and a branded site for a photography, cinematography and drone studio."
+>
+	<div class="board">
+		<PageHeader
+			title="Client Work"
+			intro="Production builds for real clients. Two engagements, designed and built end to end, still running in production."
+		/>
+
+		<section class="stack-md">
+			<SectionHeader title="Selected Work" level="lg" />
+
+			<div class="stack-md">
+				{
+					cases.map((item) => (
+						<Card
+							href={item.data.published ? `/work/${item.id}/` : undefined}
+							title={item.data.title}
+							copy={item.data.copy}
+							meta={item.data.year}
+							cta="Read the case study"
+							tone={item.data.tone ?? 'subtle'}
+							size="lg"
+						/>
+					))
+				}
+			</div>
+		</section>
+
+		<ContactLink prompt="Working on something similar?" />
+	</div>
+</BaseLayout>
