@@ -1,0 +1,55 @@
+---
+/**
+ * The Lab — built from the "Lab / Desktop" board in Penpot.
+ *
+ * The list is not written here: every experiment in src/lab is an Astro
+ * component that exports `labMeta`, and this page reads that.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Card from '../../components/Card.astro';
+import ContactLink from '../../components/ContactLink.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import { demos } from '../../data/collections';
+---
+
+<BaseLayout
+	title="The Lab"
+	description="Interactive studies in shaders, variable typography, OKLCH colour and layout systems — small experiments in how the browser actually behaves."
+>
+	<div class="board">
+		<PageHeader
+			title="The Lab"
+			intro="Small interactive studies and tools for exploring an idea hands-on. Each one is a live build, not a mockup."
+		/>
+
+		<section class="stack-lg">
+			<SectionHeader title="Experiments" level="lg" />
+
+			<div class="demos">
+				{
+					demos.map((demo) => (
+						<Card
+							href={demo.published ? `/lab/${demo.slug}/` : undefined}
+							title={demo.title}
+							copy={demo.copy}
+							cta={demo.cta}
+							size="sm"
+						/>
+					))
+				}
+			</div>
+		</section>
+
+		<ContactLink prompt="Want something like this built?" />
+	</div>
+</BaseLayout>
+
+<style>
+	.demos {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+		gap: var(--space-md);
+	}
+</style>

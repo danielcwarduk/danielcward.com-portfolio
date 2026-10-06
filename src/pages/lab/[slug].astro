@@ -1,0 +1,27 @@
+---
+/**
+ * A single Lab experiment. The component itself lives in src/lab, next to its
+ * metadata — this file only gives it a route.
+ */
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { demos } from '../../data/collections';
+
+export function getStaticPaths() {
+	return demos
+		.filter((demo) => demo.published)
+		.map((demo) => ({ params: { slug: demo.slug }, props: { demo } }));
+}
+
+const { demo } = Astro.props;
+const Experiment = demo.Experiment;
+---
+
+<BaseLayout title={demo.title} description={demo.copy}>
+	<div class="board">
+		<PageHeader title={demo.title} intro={demo.copy} />
+
+		<Experiment />
+	</div>
+</BaseLayout>

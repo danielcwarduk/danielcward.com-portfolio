@@ -1,0 +1,42 @@
+---
+/**
+ * ContactLink — the closing prompt at the foot of an interior page.
+ *
+ * Sources: link / contact (Blog, Client Work, Lab / Desktop)
+ *   Inter 400 14/1.3 — "Have a question or an idea?  Get in touch  +"
+ */
+
+interface Props {
+	prompt: string;
+	href?: string;
+}
+
+const { prompt, href = '/contact/' } = Astro.props;
+---
+
+<p class="contact-link body-xs">
+	{prompt}
+	<a class="contact-link__action label-md" href={href}>
+		Get in touch
+		<span aria-hidden="true">→</span>
+	</a>
+</p>
+
+<style>
+	/* flex + gap rather than a literal space, which Astro trims */
+	.contact-link {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: var(--space-2xs);
+	}
+
+	.contact-link__action {
+		color: var(--fg);
+		transition: color var(--duration-fast) var(--ease-standard);
+	}
+
+	.contact-link__action:hover {
+		color: var(--fg-accent-text);
+	}
+</style>

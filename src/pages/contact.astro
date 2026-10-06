@@ -1,0 +1,26 @@
+---
+/**
+ * Contact — built from the "Contact Page" board in Penpot
+ * (contact.danielcward.com → panel / contact-card).
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Panel from '../components/Panel.astro';
+import { contactFields, site } from '../data/content';
+---
+
+<BaseLayout
+	title="Contact"
+	description="Contact Daniel C. Ward about freelance web builds, front-end architecture, and client work. Available for new projects from October 2026."
+>
+	<div class="board">
+		<Panel
+			title={site.name}
+			level={1}
+			subtitle={site.role}
+			bio="I design and build software for the web: client work, tools, and experiments. I like small surfaces, sharp typography, and interfaces that stay out of the way."
+			fields={contactFields}
+			cta={{ label: 'Send an email', href: `mailto:${site.email}` }}
+		/>
+	</div>
+</BaseLayout>
