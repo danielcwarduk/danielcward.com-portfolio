@@ -1,0 +1,71 @@
+---
+/**
+ * 404 — served by the host for any URL that does not match a generated page.
+ *
+ * noindex is not set here: an error page should never enter the index, and
+ * Google treats the 404 status itself as the exclusion signal. The meta tag
+ * is belt-and-braces for hosts that serve this with a 200.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const links = [
+	{ label: 'Work', href: '/work/' },
+	{ label: 'Notes', href: '/notes/' },
+	{ label: 'The Lab', href: '/lab/' },
+	{ label: 'Contact', href: '/contact/' },
+];
+---
+
+<BaseLayout
+	title="Page not found"
+	description="That page does not exist on danielcward.com."
+	noindex
+>
+	<div class="board">
+		<PageHeader
+			title="Page not found"
+			intro="That URL does not match anything here. It may have moved, or the link that sent you may be out of date."
+		/>
+
+		<div class="links">
+			<Button href="/" variant="accent">Back to the home page</Button>
+
+			<nav class="links__list" aria-label="Site sections">
+				<ul>
+					{
+						links.map((link) => (
+							<li>
+								<a href={link.href}>{link.label}</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+		</div>
+	</div>
+</BaseLayout>
+
+<style>
+	.links {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-lg);
+	}
+
+	.links__list ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-md);
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	.links__list a:hover {
+		color: var(--fg-accent-text);
+	}
+</style>

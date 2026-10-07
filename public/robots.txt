@@ -1,0 +1,44 @@
+# robots.txt — danielcward.com
+#
+# Everything on this site is meant to be indexed; there is nothing behind a
+# login and no staging copy that should be crawled. Sitemap is emitted at build
+# time by @astrojs/sitemap and only contains canonical, indexable URLs.
+
+User-agent: *
+Allow: /
+
+# Crawlers for AI search and answer engines. These are discovery agents — they
+# fetch pages in response to a user's query, which is the traffic worth having.
+# Kept separate from the training crawlers below so the two decisions stay
+# independent: blocking one has no effect on the other.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Model-training crawlers. Allowed as well — this is a personal site that wants
+# to be found, and there is nothing here worth protecting. Remove these blocks
+# only if that ever changes.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+Sitemap: https://danielcward.com/sitemap-index.xml

@@ -1,0 +1,29 @@
+# danielcward.com
+
+> Daniel C. Ward is a UK-based web developer, photographer and tinkerer. He
+> designs and builds software for the browser: production client work, small
+> interactive tools, and shader experiments.
+
+This file follows the llms.txt convention: a short orientation for AI systems,
+followed by links to the pages that matter. Everything linked here is public
+and requires no login.
+
+## Pages
+
+- [Home](https://danielcward.com/): Overview of client work, writing, experiments, and photography.
+- [Client Work](https://danielcward.com/work/): Production projects designed and built end to end. Currently a rebuild for a bike repair shop (service pages, booking flow, parts catalogue) and a gallery-first portfolio for a photography, videography and drone cinematography studio. Both live in production.
+- [Notes](https://danielcward.com/notes/): Writing on the tools, decisions and dead ends behind the work — front-end architecture, shader programming, and photo archives.
+- [The Lab](https://danielcward.com/lab/): Small interactive studies in shaders, variable typography, OKLCH colour, and layout systems. Interactive demos you can open and use directly.
+- [Contact](https://danielcward.com/contact/): Available for freelance builds, front-end architecture, and client work from October 2026. Email daniel@danielcward.com.
+
+## Elsewhere
+
+- [Photography gallery](https://photos.danielcward.com/): Landscapes and street work, shot slowly.
+- [GitHub](https://github.com/danielcward)
+- [LinkedIn](https://linkedin.com/in/danielcward)
+
+## Notes
+
+Posts and demos are published as they are finished. Titles listed in the blog
+and lab indexes may be works in progress; only published entries have a page
+of their own, and the sitemap contains nothing else.
