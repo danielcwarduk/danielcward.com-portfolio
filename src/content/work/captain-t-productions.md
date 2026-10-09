@@ -30,7 +30,7 @@ My client decided on idea five as the basic premise for the style. Since this wa
 
 Using **WordPress** and a custom theme, I built this site based on the client's initial logo and the colours and layout used in **idea five** of the mockups as inspiration.
 
-A few things I focused on:
+What I concentrated on:
 
 - Keeping the focus clear to the user
 - Maintaining a simple layout to draw focus to the products
@@ -48,20 +48,14 @@ To help with SEO, analytics and reviews, I installed:
 - **Spectra** for a custom feel and ease of viewing for large pieces of information
 - **Yoast SEO** for basic optimisation
 
-This was deemed by the client and myself to be the essentials of what was needed.
+Enough to run it and see whether anyone is reading.
 
 ## Outcome and takeaways
 
 ### Outcome
 
-The client got a branded WordPress site with flexible media sections for their photography, cinematography and drone work. Crucially, this project improved my handover process: working *with* the client on edits instead of handing off a finished site.
-
-### Key takeaways
-
-As this was slightly more complex than [Captain Cycles](/work/captain-cycles/), it gave me a greater volume of work. However, as Captain Cycles was finishing up, I had to create balance between working on both sites at the same time, to keep up momentum and keep to the client's deadlines.
+The client got a branded WordPress site with flexible media sections for their photography, cinematography and drone work. Working *with* them on the edits instead of handing over a finished site also cut the hand-off time.
 
 ### Hindsight
 
-In hindsight, I would focus more on the intention of the site. With photography, cinematography *and* drone work, the goal was unclear at the start, and the breadth of the client's work slowed the project considerably.
-
-Also, while the WordPress training was vastly improved, I would now create a simple user guide for the more intricate elements of the WordPress dashboard.
+In hindsight, I would spend more time on what the site was actually for. Photography, cinematography *and* drone work is three businesses, and trying to serve all three from one layout slowed the project down. I would also have written a short guide for the fiddly parts of the dashboard instead of assuming a call covered it.

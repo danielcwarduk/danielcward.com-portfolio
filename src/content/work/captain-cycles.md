@@ -28,7 +28,7 @@ They weren't finished; time constraints meant I had to begin the build.
 
 I built the site in **WordPress**, using the client's copy as the foundation. To keep everything on-brand and avoid the bloat of pre-made themes, I created a **custom theme** based on their colours and style, primarily from their logo. The goal was to make something they could easily tweak without digging through complicated settings.
 
-A few things I focused on:
+What I concentrated on:
 
 - Keeping the layout clean and easy to navigate
 - Making sure the client could update text and images themselves
@@ -56,20 +56,12 @@ To help with SEO, analytics and reviews, I installed:
 - **Yoast SEO** for basic optimisation
 - **TrustIndex** to display customer reviews in a clean widget
 
-These gave the client the essentials without overwhelming them with too many tools.
+These are the essentials: analytics, basic SEO, and the reviews widget.
 
 ## Outcome and takeaways
 
 ### Outcome
 
-The finished site gave the client a professional web presence they could manage themselves: clean, on-brand, and built without unnecessary complexity. This was my first full handover, and it made clear how important structured onboarding is.
+The site now runs itself. Text and photos are editable from the WordPress admin, and there are no plugins the client can't explain.
 
-### Key takeaways
-
-With the site simple, I focused on my relationship with the client, keeping them informed and involved at every key step. I also strengthened my adaptability. When the client needed more time to respond, I made the most of my time by progressing with the elements I could, often without full mockups or final copy, while still meeting deadlines and protecting the concept.
-
-### Hindsight
-
-In hindsight, I would definitely have handled onboarding differently. I sent a short form of ten questions, but a meeting would have let the client share their ideas in far more detail.
-
-I would also have taught them WordPress differently. Instead of training them separately, I would have worked *with* them as the first large content changes arrived; people learn better doing it than watching a separate tutorial. That change carried into [Captain T Productions](/work/captain-t-productions/).
+Two things I'd change. I sent ten questions by email when a call would have told me twice as much. And I trained the client in one sitting instead of alongside the first real edits — people learn the thing they are doing, not a thing they watched someone do. That change carried into [Captain T Productions](/work/captain-t-productions/).

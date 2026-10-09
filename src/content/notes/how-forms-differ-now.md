@@ -1,6 +1,6 @@
 ---
 title: How forms differ from a while ago
-excerpt: How should a form be built now?
+excerpt: Catalogue forms, guided flows, and everything between them — and when each one wins.
 date: Wed 7 October 2026
 readingTime: 6 min read
 published: true
@@ -8,7 +8,7 @@ published: true
 
 ## What is the purpose of a form?
 
-Typically, a form is there to record information. Get contact details, get leads, streamline queries, automate workflows in CRMs, onboarding. The list is very long; as such, they are very useful. They allow data to be gathered from no end of sources, but how should one be designed?
+A form records information. Contact details, leads, support queries, CRM records. The list is long, and each of those is a design problem.
 
 ## How are forms typically designed?
 
@@ -110,6 +110,6 @@ Some rough guidance:
 - Editing settings rather than creating something: progressive disclosure
 - Anything a machine will read back to a human: keep the transcript
 
-The mistake is treating this as a style choice. The layout is a decision about how much the user is asked to hold in their head at once, and the cost of getting it wrong is the whole conversion.
+The mistake is treating this as a style choice. The layout decides how much the user has to hold in their head at once.
 
 Before building, ask what is already known. A field that can be filled without asking should not be visible.

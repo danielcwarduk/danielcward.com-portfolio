@@ -30,14 +30,14 @@ export const site = {
 	 */
 	url: 'https://danielcward.com',
 	/** Displayed on the hero and the share image, so it keeps its full stop. */
-	role: 'Developer, photographer, and tinkerer.',
+	role: 'Web developer. Photographer when the light is right.',
 	/**
 	 * Search-facing one-liner. Sentence case and no trailing full stop, so it
 	 * reads correctly in a <title> and a SERP snippet rather than as a caption.
 	 */
-	tagline: 'Web developer, photographer and tinkerer',
+	tagline: 'Web developer and photographer, working from the UK',
 	description:
-		'UK-based web developer, photographer and tinkerer building client software, interactive browser tools, and shader experiments.',
+		'UK-based web developer building client sites and interactive browser tools. Mostly WordPress and Astro; currently writing GLSL.',
 	email: 'danielcwardprojects@gmail.com',
 	photosUrl: 'https://photos.danielcward.com',
 };
