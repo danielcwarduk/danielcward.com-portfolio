@@ -1,0 +1,55 @@
+# Verify every push and pull request: contrast assertions, `astro check`, and a
+# full static build. Runs `npm run verify` — the same command run locally — so a
+# green branch means the deploy that follows it will build.
+
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# The Node version is pinned to the floor in package.json engines. Bumping that
+# field is the intended way to move CI, not editing it here.
+env:
+  NODE_VERSION: '22.22.1'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: Contrast, typecheck and build
+        run: npm run verify
+
+# Confirms the build output is complete before Vercel is allowed to ship it.
+  # Vercel runs its own build from vercel.json; this gate exists so a partial
+  # output cannot be reported as a successful deploy.
+  deploy-check:
+    name: deploy check
+    needs: verify
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Assert the expected entry points exist
+        run: |
+          test -f dist/index.html
+          test -f dist/404.html
+          test -f dist/sitemap-index.xml
+          test -f dist/rss.xml
+          echo "dist/ contains the expected entry points"
