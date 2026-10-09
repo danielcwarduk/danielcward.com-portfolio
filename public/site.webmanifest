@@ -1,16 +1,30 @@
 {
 	"name": "Daniel C. Ward",
 	"short_name": "Daniel C. Ward",
+	"description": "Web developer, photographer and tinkerer.",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"background_color": "#f6efe3",
+	"theme_color": "#3f4a24",
 	"icons": [
 		{
 			"src": "/favicon.svg",
 			"sizes": "any",
-			"type": "image/svg+xml"
+			"type": "image/svg+xml",
+			"purpose": "any"
 		},
 		{
 			"src": "/icon-192.png",
 			"sizes": "192x192",
-			"type": "image/png"
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/favicon.ico",
+			"sizes": "48x48",
+			"type": "image/x-icon",
+			"purpose": "any"
 		}
 	]
 }

@@ -7,7 +7,7 @@ import { z } from 'astro/zod';
  * here, because its experiments are Astro components and live in src/lab.
  *
  * `published` is required rather than defaulted. A note that is still being
- * written stays listed on the notes index with no route behind it, and forgetting the
+ * written stays listed on the notes index with no route behind it. Forgetting the
  * flag must not be the thing that publishes it.
  */
 export const collections = {

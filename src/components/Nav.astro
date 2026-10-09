@@ -94,16 +94,30 @@ const isCurrent = (href: string) =>
 		'.nav__brand, body > :not(header)'
 	);
 
-	menu?.addEventListener('toggle', () => {
-		behind.forEach((el) => (el.inert = menu.open));
-		document.body.style.overflow = menu.open ? 'hidden' : '';
-	});
+	const applyState = () => {
+		behind.forEach((el) => (el.inert = menu!.open));
+		document.body.style.overflow = menu!.open ? 'hidden' : '';
+	};
+
+	menu?.addEventListener('toggle', applyState);
 
 	document.addEventListener('keydown', (event) => {
 		if (event.key === 'Escape' && menu?.open) {
 			menu.open = false;
 			toggle?.focus();
 		}
+	});
+
+	/*
+	 * Crossing the breakpoint upwards while the overlay is open hides it without
+	 * firing `toggle`, which would leave main inert and the body unscrollable
+	 * behind a display:none menu — a page that looks fine and takes no input.
+	 * Closing first fires `toggle` as a side effect, so applyState above
+	 * unwinds it.
+	 */
+	const wide = window.matchMedia('(width >= 800px)');
+	wide.addEventListener('change', () => {
+		if (wide.matches && menu?.open) menu.open = false;
 	});
 </script>
 

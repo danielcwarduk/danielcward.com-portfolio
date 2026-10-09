@@ -95,6 +95,34 @@ const pairs = [
 	['card--plain hairline', '--border-hairline', '--bg', 3],
 	['focus ring on page', '--fg', '--bg', 3],
 	['focus ring on inverse', '--fg', '--bg-inverse', 3, true],
+
+	// Added after .prose links were given a colour: link text in body copy is
+	// now the one place accent text sits on a subtly different surface, and it
+	// is the pair a reader is most likely to be looking at.
+	['prose link on --bg', '--fg-accent-text', '--bg', 4.5],
+	['prose link on --bg-subtle', '--fg-accent-text', '--bg-subtle', 4.5],
+	['inverse prose link on --bg-inverse', '--fg-accent-text', '--bg-inverse', 4.5, true],
+
+	// .nav-menu__toggle border is a control boundary under 1.4.11, and it sits
+	// only ~0.01 over the line — worth pinning so a token tweak cannot quietly
+	// push it under.
+	['nav-menu toggle border', '--border-muted', '--bg', 3],
+];
+
+/*
+ * Hover and active states that change a colour directly inherit from the base
+ * pair above and so need no separate assertion. Two do not, and are checked
+ * here as literals rather than tokens, because they are written as raw values
+ * in the component stylesheets:
+ *
+ *   Button.astro .btn--accent:hover  background: brightness(0.94) on --bg-accent
+ *   Button.astro .btn--inverse:hover background: #564c22
+ *
+ * A filter-based hover resolves after the base pair, so it is not implied by it.
+ */
+const hoverPairs = [
+	['btn--accent:hover (brightness 0.94)', '#f6efe3', '#a84600', 4.5],
+	['btn--inverse:hover #564c22 label', '#f6efe3', '#564c22', 4.5],
 ];
 
 let failed = 0;
@@ -104,6 +132,17 @@ console.log('Contrast assertions\n');
 for (const [label, fgToken, bgToken, min, inverse] of pairs) {
 	const fg = token(fgToken, inverse ? 'inverse' : 'root');
 	const bg = token(bgToken);
+	const ratio = contrast(fg, bg);
+	const ok = ratio >= min;
+	if (!ok) failed++;
+	console.log(
+		`  ${(ok ? 'ok' : 'FAIL').padEnd(4)}  ${label.padEnd(34)} ${fg} on ${bg}  ${ratio
+			.toFixed(2)
+			.padStart(5)}:1  (needs ${min})`,
+	);
+}
+
+for (const [label, fg, bg, min] of hoverPairs) {
 	const ratio = contrast(fg, bg);
 	const ok = ratio >= min;
 	if (!ok) failed++;

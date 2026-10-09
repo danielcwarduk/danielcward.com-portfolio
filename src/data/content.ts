@@ -43,14 +43,35 @@ export const site = {
 };
 
 /**
+ * The one place the profile handles are written down. The contact panel and the
+ * JSON-LD `sameAs` used to disagree (`danielcward` vs `danielcwarduk`), and
+ * nothing caught it because the URLs were spelled out in both files. Both read
+ * these now, so they cannot drift.
+ */
+export const profiles = {
+	linkedin: 'https://linkedin.com/in/danielcwarduk',
+	github: 'https://github.com/danielcwarduk',
+};
+
+/**
+ * The site's identity URL, in exactly one form. `site.url` is stored without a
+ * trailing slash so fragments can be appended to it directly, which meant the
+ * bare origin had to be spelled three ways across the codebase — bare, with a
+ * slash, and as Astro.site — and the JSON-LD ended up with an `@id` of
+ * `https://danielcward.com#person` beside a `url` of
+ * `https://danielcward.com/`. Derived from `site.url` so the two cannot differ.
+ */
+export const siteOrigin = `${site.url}/`;
+
+/**
  * Schema.org node ids for the site-level graph that BaseLayout declares. Every
  * page that references them imports these same two strings rather than
  * rebuilding them from `site.url`: an `@id` and a reference that differ by a
  * trailing slash is a dangling reference, not a render error, so nothing else
  * would catch it.
  */
-export const personId = `${site.url}#person`;
-export const websiteId = `${site.url}#website`;
+export const personId = `${siteOrigin}#person`;
+export const websiteId = `${siteOrigin}#website`;
 
 /**
  * Breadcrumb trail for a depth-2 page, root-first. Every page that passes
@@ -65,7 +86,7 @@ export const breadcrumbs = (
 ) => ({
 	'@type': 'BreadcrumbList',
 	itemListElement: [
-		{ '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+		{ '@type': 'ListItem', position: 1, name: 'Home', item: siteOrigin },
 		{ '@type': 'ListItem', position: 2, name: section, item: `${site.url}${sectionPath}` },
 		{ '@type': 'ListItem', position: 3, name: title, item: `${site.url}${path}` },
 	],
@@ -87,10 +108,6 @@ export const navLinks = [
 /* footer / contacts */
 export const contactFields: Field[] = [
 	{ label: 'Email', value: site.email, href: `mailto:${site.email}` },
-	{
-		label: 'LinkedIn',
-		value: 'linkedin.com/in/danielcwarduk',
-		href: 'https://linkedin.com/in/danielcwarduk',
-	},
-	{ label: 'GitHub', value: 'github.com/danielcwarduk', href: 'https://github.com/danielcwarduk' },
+	{ label: 'LinkedIn', value: profiles.linkedin.replace('https://', ''), href: profiles.linkedin },
+	{ label: 'GitHub', value: profiles.github.replace('https://', ''), href: profiles.github },
 ];

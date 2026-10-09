@@ -6,7 +6,11 @@
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import { demos } from '../../data/collections';
+import { demos, type Demo } from '../../data/collections';
+
+interface Props {
+	demo: Demo;
+}
 
 export function getStaticPaths() {
 	return demos

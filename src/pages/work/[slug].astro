@@ -27,7 +27,7 @@ const path = `/work/${item.id}/`;
 <BaseLayout
 	title={item.data.title}
 	description={item.data.copy}
-	schema={[breadcrumbs('Work', '/work/', path, item.data.title)]}
+	schema={[breadcrumbs('Client Work', '/work/', path, item.data.title)]}
 >
 	<div class="board">
 		<div class="stack-sm">
@@ -36,7 +36,10 @@ const path = `/work/${item.id}/`;
 			<p class="meta-row fine">
 				<span>{item.data.year}</span>
 				<span aria-hidden="true">·</span>
-				<a href={item.data.href}>{item.data.visitLabel} ↗</a>
+				<a href={item.data.href}>
+					{item.data.visitLabel}
+					<span aria-hidden="true"> ↗</span>
+				</a>
 			</p>
 
 			<div class="prose body-md">

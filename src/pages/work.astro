@@ -11,12 +11,12 @@ import Card from '../components/Card.astro';
 import ContactLink from '../components/ContactLink.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import { cases } from '../data/collections';
+import { allCases } from '../data/collections';
 ---
 
 <BaseLayout
 	title="Client Work"
-	description="Production web work by Daniel C. Ward: a custom WordPress service site for a bike repair shop, and a branded site for a photography, cinematography and drone studio."
+	description="Production web work by Daniel C. Ward: a custom WordPress site for a bike repair shop, and a branded site for a photography and cinematography studio."
 >
 	<div class="board">
 		<PageHeader
@@ -29,7 +29,7 @@ import { cases } from '../data/collections';
 
 			<div class="stack-md">
 				{
-					cases.map((item) => (
+					allCases.map((item) => (
 						<Card
 							href={item.data.published ? `/work/${item.id}/` : undefined}
 							title={item.data.title}

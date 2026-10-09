@@ -373,6 +373,25 @@ a {
   border-top: var(--border-hairline);
 }
 
+/* Links inside prose. The global `a` rule strips decoration sitewide for the
+   nav and cards, which is fine there because those are labelled blocks — but
+   it also left in-body links looking exactly like the paragraph around them.
+   Underlined and accented, so a link reads as a link and not by position. */
+.prose a {
+  color: var(--fg-accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.prose a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
 /* --------------------------------------------------------------------------
    4. Utilities
    -------------------------------------------------------------------------- */
@@ -457,6 +476,13 @@ a {
 :focus-visible {
   outline: 2px solid var(--fg);
   outline-offset: 2px;
+}
+
+/* `main` is focusable only so the skip link can hand focus to it. That is a
+   programmatic move, not a keyboard-visible one, so it must not draw a ring
+   around the entire page. */
+main:focus {
+  outline: none;
 }
 
 /* Off-screen until focused, then pinned to the top-left of the viewport.

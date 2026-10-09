@@ -11,12 +11,16 @@
  * @graph stays a single valid document.
  */
 
+// Both families are self-hosted and carry unicode-range per subset, so only the
+// latin files transfer for an en-GB site. `font-display: swap` means a brief
+// fallback on first paint; the site is small enough that it is not worth
+// hand-rolling a preload for hashed, content-hashed filenames.
 import '@fontsource-variable/inter';
 import '@fontsource-variable/bricolage-grotesque';
 import '../styles/global.css';
 
 import Nav from '../components/Nav.astro';
-import { navLinks, personId, site, websiteId } from '../data/content';
+import { navLinks, personId, profiles, site, websiteId } from '../data/content';
 
 interface Props {
 	/**
@@ -69,14 +73,11 @@ const jsonLd = {
 			'@type': 'Person',
 			'@id': personId,
 			name: site.name,
-			url: Astro.site?.href,
+			url: origin.href,
 			email: `mailto:${site.email}`,
 			jobTitle: 'Web developer',
 			description: site.description,
-			sameAs: [
-				'https://linkedin.com/in/danielcward',
-				'https://github.com/danielcward',
-			],
+			sameAs: [profiles.linkedin, profiles.github],
 			knowsAbout: [
 				'Web development',
 				'Front-end architecture',
@@ -87,7 +88,7 @@ const jsonLd = {
 		{
 			'@type': 'WebSite',
 			'@id': websiteId,
-			url: Astro.site?.href,
+			url: origin.href,
 			name: site.name,
 			description: site.description,
 			inLanguage: 'en-GB',
@@ -102,17 +103,19 @@ const jsonLd = {
 <html lang="en-GB">
 	<head>
 		<meta charset="utf-8" />
-		<!-- Rasters first, SVG last: browsers take the last matching rel="icon", so
-     the SVG wins where it is supported. The SVG flips on its own via
-     prefers-color-scheme; an ICO cannot, hence the dark one under `media`.
-     Safari reads no SVG favicon at all and lands on the rasters. -->
-<link rel="icon" href="/favicon.ico" sizes="any" />
-		<link rel="icon" href="/favicon-dark.ico" media="(prefers-color-scheme: dark)" sizes="any" />
+<!-- 16/32/48 raster fallback for browsers that cannot read SVG; the dark
+     variant is selected by media, which an ICO cannot do for itself. The SVG
+     follows and flips colour on its own via prefers-color-scheme. Safari reads
+     no SVG favicon and lands on the rasters. Browsers pick by type, sizes and
+     media — not document order — so each link needs the right attributes. -->
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+		<link rel="icon" href="/favicon-dark.ico" media="(prefers-color-scheme: dark)" sizes="16x16 32x32 48x48" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="manifest" href="/site.webmanifest" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="theme-color" content="#3f4a24" />
 
 		<title>{fullTitle}</title>
 		<meta name="description" content={description} />

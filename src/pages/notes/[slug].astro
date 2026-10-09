@@ -10,8 +10,12 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import { formatDate, isoDate } from '../../data/collections';
-import { breadcrumbs, personId, site, websiteId } from '../../data/content';
+import { formatDate, isoDate, type Note } from '../../data/collections';
+import { breadcrumbs, personId, siteOrigin, websiteId } from '../../data/content';
+
+interface Props {
+	note: Note;
+}
 
 export async function getStaticPaths() {
 	const notes = await getCollection('notes', ({ data }) => data.published);
@@ -35,14 +39,14 @@ const iso = isoDate(note.data.date);
 	schema={[
 		{
 			'@type': 'BlogPosting',
-			'@id': `${site.url}${path}#post`,
-			mainEntityOfPage: { '@type': 'WebPage', '@id': `${site.url}${path}` },
+			'@id': `${siteOrigin}${path}#post`,
+			mainEntityOfPage: { '@type': 'WebPage', '@id': `${siteOrigin}${path}` },
 			headline: note.data.title,
 			description: note.data.excerpt,
 			// Required for Article rich results. Same asset the card uses.
-			image: `${site.url}/og-default.png`,
+			image: `${siteOrigin}og-default.png`,
 			datePublished: iso,
-			url: `${site.url}${path}`,
+			url: `${siteOrigin}${path}`,
 			author: { '@id': personId },
 			publisher: { '@id': personId },
 			inLanguage: 'en-GB',
