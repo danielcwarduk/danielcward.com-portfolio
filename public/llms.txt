@@ -14,11 +14,11 @@ and requires no login.
 - [Client Work](https://danielcward.com/work/): Production projects designed and built end to end. Currently a custom WordPress service site for a bike repair shop and a branded site for a photography and cinematography studio. Both live in production, with case studies for each.
 - [Notes](https://danielcward.com/notes/): Writing on the tools, decisions and dead ends behind the work — front-end architecture, shader programming, and photo archives.
 - [The Lab](https://danielcward.com/lab/): Small interactive studies in shaders, variable typography, OKLCH colour, and layout systems. Work in progress; finished demos are published as their own pages.
+- [Photography](https://danielcward.com/photography/): Landscapes and street work, shot slowly. Still being built; this page will link to the gallery once it opens.
 - [Contact](https://danielcward.com/contact/): Available for freelance builds, front-end architecture, and client work from October 2026. Email danielcwardprojects@gmail.com.
 
 ## Elsewhere
 
-- [Photography gallery](https://photos.danielcward.com/): Landscapes and street work, shot slowly.
 - [GitHub](https://github.com/danielcwarduk)
 - [LinkedIn](https://linkedin.com/in/danielcwarduk)
 

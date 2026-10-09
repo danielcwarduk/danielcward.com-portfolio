@@ -101,7 +101,7 @@ export const navLinks = [
 	{ label: 'Work', href: '/work/' },
 	{ label: 'Lab', href: '/lab/' },
 	{ label: 'Notes', href: '/notes/' },
-	{ label: 'Photography', href: site.photosUrl },
+	{ label: 'Photography', href: '/photography/' },
 	{ label: 'Contact', href: '/contact/' },
 ];
 

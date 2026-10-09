@@ -12,5 +12,14 @@ export default defineConfig({
 	// index.html, so /work/ is the form that actually resolves on a static
 	// host. Canonicals and the sitemap both normalise to match.
 	trailingSlash: 'always',
-	integrations: [sitemap()],
+	integrations: [
+		sitemap({
+			// Pages that render but must not be indexed — currently the
+			// photography placeholder, which BaseLayout marks noindex. A
+			// noindex URL in the sitemap is a contradiction: it asks a crawler
+			// to index something you have told it to skip. Keep this list in
+			// step with the noindex pages.
+			filter: (page) => !page.includes('/photography/'),
+		}),
+	],
 });

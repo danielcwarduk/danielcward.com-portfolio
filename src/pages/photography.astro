@@ -1,0 +1,77 @@
+---
+/**
+ * Photography — a placeholder until the gallery is ready.
+ *
+ * The gallery lives on its own host, photos.danielcward.com, which is not
+ * published yet. Until it is, this page is what the Photography nav entry and
+ * the home page band point at, so neither link reaches for a domain that will
+ * not resolve.
+ *
+ * noindex: a placeholder is not the photography page. When the gallery opens,
+ * delete this file and point both links back at site.photosUrl — the canonical,
+ * the sitemap entry, and the nav current-state all follow automatically.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../data/content';
+---
+
+<BaseLayout
+	title="Photography"
+	description="A photography gallery by Daniel C. Ward — landscapes and street work — is being put together and will open here shortly."
+	noindex
+>
+	<div class="board">
+		<PageHeader
+			title="Photography"
+			intro="A gallery of landscapes and street work, being put together now. It will open here when it is ready."
+		/>
+
+		<div class="links">
+			<Button href="/contact/" variant="accent">Get in touch</Button>
+
+			<p class="links__note fine">
+				In the meantime, the rest of the site is here:
+				<a href="/work/">client work</a>,
+				<a href="/notes/">notes</a>, and
+				<a href="/lab/">the lab</a>. Photographs land at
+				<span class="links__host">{site.photosUrl.replace('https://', '')}</span>
+				once they do.
+			</p>
+		</div>
+	</div>
+</BaseLayout>
+
+<style>
+	.links {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-lg);
+	}
+
+	.links__note {
+		color: var(--fg-muted);
+		max-width: var(--measure);
+	}
+
+	/* Reuse the .prose link treatment rather than restating it: an inline link
+	   inside a muted paragraph needs exactly the same colour and underline, and
+	   a second copy is how the two drift apart. */
+	.links__note a {
+		color: var(--fg-accent-text);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+	}
+
+	.links__note a:hover {
+		text-decoration-thickness: 2px;
+	}
+
+	.links__host {
+		overflow-wrap: anywhere;
+	}
+</style>
