@@ -7,65 +7,115 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Band from '../components/Band.astro';
+import Button from '../components/Button.astro';
 import Hero from '../components/Hero.astro';
 import Panel from '../components/Panel.astro';
+import PageHeader from '../components/PageHeader.astro';
 import PostCarousel from '../components/PostCarousel.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import { notes } from '../data/collections';
 import { contactFields, site } from '../data/content';
+
+const isPausedForDevelopment = true;
 ---
 
 <BaseLayout description={site.description}>
-	<div class="board">
-		<Hero
-			heading={site.name}
-			role={site.role}
-			lead="I build websites for people who need them to keep working. Client sites, small tools, and whatever shader thing has my attention this month."
-			primary={{ label: 'See my work', href: '/work/' }}
-			secondary={{ label: 'Get in touch', href: '/contact/' }}
-		/>
+	{isPausedForDevelopment && (
+		<div class="board">
+			<section class="stack-lg">
+				<p class="label">Status</p>
+				<PageHeader
+					title="Paused for development"
+					intro="The portfolio is temporarily paused while I work on updates. Thanks for your patience — it will be back shortly."
+				/>
+				<div class="paused__actions">
+					<Button href="/contact/" variant="accent">Get in touch</Button>
+					<Button href="/work/" variant="inverse">View selected work</Button>
+				</div>
+				<p class="paused__note fine">
+					You can also browse <a href="/notes/">notes</a>, <a href="/lab/">the lab</a>, or
+					email <a href={`mailto:${site.email}`}>{site.email}</a>.
+				</p>
+			</section>
+		</div>
+	)}
 
-		<section class="stack-lg">
-			<SectionHeader
-				title="My notes"
-				action={{ label: 'All notes', href: '/notes/' }}
+	{!isPausedForDevelopment && (
+		<div class="board">
+			<Hero
+				heading={site.name}
+				role={site.role}
+				lead="I build websites for people who need them to keep working. Client sites, small tools, and whatever shader thing has my attention this month."
+				primary={{ label: 'See my work', href: '/work/' }}
+				secondary={{ label: 'Get in touch', href: '/contact/' }}
 			/>
-			<p class="intro body-md">
-				Notes I don't want to lose, written up in case they help someone else.
-			</p>
-			<PostCarousel notes={notes.slice(0, 3)} />
-		</section>
 
-		<div class="stack-md">
-			<Band
-				title="Client Work"
-				summary="Two client sites, designed and built end to end, still running. WordPress, hand-rolled themes, nothing that needs a plugin to survive a year."
-				action={{ label: 'See client work', href: '/work/' }}
-				variant="heavy"
-			/>
-			<Band
-				title="Concepts & Demos"
-				summary="Things I build to find out whether they work. Some finished, most not."
-				action={{ label: 'Explore concepts', href: '/lab/' }}
-				variant="outlined"
+			<section class="stack-lg">
+				<SectionHeader
+					title="My notes"
+					action={{ label: 'All notes', href: '/notes/' }}
+				/>
+				<p class="intro body-md">
+					Notes I don't want to lose, written up in case they help someone else.
+				</p>
+				<PostCarousel notes={notes.slice(0, 3)} />
+			</section>
+
+			<div class="stack-md">
+				<Band
+					title="Client Work"
+					summary="Two client sites, designed and built end to end, still running. WordPress, hand-rolled themes, nothing that needs a plugin to survive a year."
+					action={{ label: 'See client work', href: '/work/' }}
+					variant="heavy"
+				/>
+				<Band
+					title="Concepts & Demos"
+					summary="Things I build to find out whether they work. Some finished, most not."
+					action={{ label: 'Explore concepts', href: '/lab/' }}
+					variant="outlined"
+				/>
+			</div>
+
+			<section class="stack-lg">
+				<SectionHeader
+					title="Also, photos"
+					action={{ label: 'Browse the gallery', href: '/photography/' }}
+				/>
+				<p class="intro body-md">
+					On a different site. Landscapes and street work, shot slowly and edited
+					less than you'd think. That gallery is still being put together.
+				</p>
+			</section>
+
+			<Panel
+				title="What are you working on?"
+				fields={contactFields}
+				cta={{ label: 'Send an email', href: `mailto:${site.email}` }}
 			/>
 		</div>
-
-		<section class="stack-lg">
-			<SectionHeader
-				title="Also, photos"
-action={{ label: 'Browse the gallery', href: '/photography/' }}
-			/>
-		<p class="intro body-md">
-			On a different site. Landscapes and street work, shot slowly and edited
-			less than you'd think. That gallery is still being put together.
-		</p>
-		</section>
-
-		<Panel
-			title="What are you working on?"
-			fields={contactFields}
-			cta={{ label: 'Send an email', href: `mailto:${site.email}` }}
-		/>
-	</div>
+	)}
 </BaseLayout>
+
+<style>
+	.paused__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+	}
+
+	.paused__note {
+		max-width: var(--measure);
+		color: var(--fg-muted);
+	}
+
+	.paused__note a {
+		color: var(--fg-accent-text);
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+	}
+
+	.paused__note a:hover {
+		text-decoration-thickness: 2px;
+	}
+</style>
