@@ -3,7 +3,7 @@ title: How forms differ from a while ago
 excerpt: Catalogue forms, guided flows, and everything between them — and when each one wins.
 date: Wed 7 October 2026
 readingTime: 6 min read
-published: true
+published: false
 ---
 
 ## What is the purpose of a form?
