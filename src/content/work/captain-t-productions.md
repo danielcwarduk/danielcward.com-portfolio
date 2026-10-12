@@ -4,7 +4,6 @@ copy: "A photography site for a local photographer, cinematography and drone pil
 year: '2026'
 href: https://captaintproductions.com
 visitLabel: Visit captaintproductions.com
-tone: inverse
 published: true
 ---
 

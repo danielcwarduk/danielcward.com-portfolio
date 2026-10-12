@@ -8,7 +8,7 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Card from '../components/Card.astro';
-import ContactLink from '../components/ContactLink.astro';
+import ContactPanel from '../components/ContactPanel.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import { allCases } from '../data/collections';
@@ -16,12 +16,12 @@ import { allCases } from '../data/collections';
 
 <BaseLayout
 	title="Client Work"
-	description="Production web work by Daniel C. Ward: a custom WordPress site for a bike repair shop, and a branded site for a photography and cinematography studio."
+	description="All my work that I have done for real clients."
 >
 	<div class="board">
 		<PageHeader
 			title="Client Work"
-			intro="Two client projects, both designed and built end to end. Both still live."
+			intro="Real projects I have done for real clients"
 		/>
 
 		<section class="stack-md">
@@ -36,7 +36,6 @@ import { allCases } from '../data/collections';
 							copy={item.data.copy}
 							meta={item.data.year}
 							cta="Read the case study"
-							tone={item.data.tone ?? 'subtle'}
 							size="lg"
 						/>
 					))
@@ -44,6 +43,6 @@ import { allCases } from '../data/collections';
 			</div>
 		</section>
 
-		<ContactLink prompt="Got a site that needs building?" />
+		<ContactPanel />
 	</div>
 </BaseLayout>

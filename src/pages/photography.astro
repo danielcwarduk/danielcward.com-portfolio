@@ -13,9 +13,8 @@
  */
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Button from '../components/Button.astro';
+import ContactPanel from '../components/ContactPanel.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { site } from '../data/content';
 ---
 
 <BaseLayout
@@ -26,50 +25,9 @@ import { site } from '../data/content';
 	<div class="board">
 		<PageHeader
 			title="Photography"
-			intro="A gallery of landscapes and street work, being put together now. It will open here when it is ready."
+			intro="A gallery of landscapes and street work, being put together now. It will open at photos.danielcward.com when it's ready"
 		/>
 
-		<div class="links">
-			<Button href="/contact/" variant="accent">Get in touch</Button>
-
-			<p class="links__note fine">
-				Meanwhile: <a href="/work/">client work</a>,
-				<a href="/notes/">notes</a>, and
-				<a href="/lab/">the lab</a>. Photos will go up at
-				<span class="links__host">{site.photosUrl.replace('https://', '')}</span>.
-			</p>
-		</div>
+		<ContactPanel />
 	</div>
 </BaseLayout>
-
-<style>
-	.links {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: var(--space-lg);
-	}
-
-	.links__note {
-		color: var(--fg-muted);
-		max-width: var(--measure);
-	}
-
-	/* Reuse the .prose link treatment rather than restating it: an inline link
-	   inside a muted paragraph needs exactly the same colour and underline, and
-	   a second copy is how the two drift apart. */
-	.links__note a {
-		color: var(--fg-accent-text);
-		text-decoration: underline;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 0.2em;
-	}
-
-	.links__note a:hover {
-		text-decoration-thickness: 2px;
-	}
-
-	.links__host {
-		overflow-wrap: anywhere;
-	}
-</style>

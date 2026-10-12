@@ -37,7 +37,7 @@ export const site = {
 	 */
 	tagline: 'Web developer and photographer, working from the UK',
 	description:
-		'UK-based web developer building client sites and interactive browser tools. Mostly WordPress and Astro; currently writing GLSL.',
+		'UK-based web developer building client sites and interactive browser tools. Mostly WordPress and Astro.',
 	email: 'danielcwardprojects@gmail.com',
 	photosUrl: 'https://photos.danielcward.com',
 };

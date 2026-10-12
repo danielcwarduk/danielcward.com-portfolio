@@ -7,7 +7,6 @@
  *          panel / contact-card (contact, 1072 × 772)
  */
 
-import Button from './Button.astro';
 import Divider from './Divider.astro';
 import type { Field } from '../data/content';
 
@@ -17,10 +16,9 @@ interface Props {
 	subtitle?: string;
 	bio?: string;
 	fields?: Field[];
-	cta?: { label: string; href: string };
 }
 
-const { title, level = 2, subtitle, bio, fields, cta } = Astro.props;
+const { title, level = 2, subtitle, bio, fields } = Astro.props;
 ---
 
 <section class="panel on-inverse">
@@ -54,14 +52,6 @@ const { title, level = 2, subtitle, bio, fields, cta } = Astro.props;
 					))}
 				</div>
 			</Fragment>
-		)
-	}
-
-	{
-		cta && (
-			<div class="panel__foot">
-				<Button href={cta.href} variant="accent">{cta.label}</Button>
-			</div>
 		)
 	}
 </section>
@@ -102,11 +92,16 @@ const { title, level = 2, subtitle, bio, fields, cta } = Astro.props;
 		transition: color var(--duration-fast) var(--ease-standard);
 	}
 
-	a.field__value:hover {
-		color: var(--fg-accent-text);
+	/* Match the .prose link treatment: accented and genuinely underlined, so an
+	   address reads as clickable rather than by position alone. */
+	a.field__value {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
 	}
 
-	.panel__foot {
-		margin-top: var(--space-xs);
+	a.field__value:hover {
+		color: var(--fg-accent-text);
+		text-decoration-thickness: 2px;
 	}
 </style>

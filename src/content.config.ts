@@ -19,6 +19,8 @@ export const collections = {
 			date: z.coerce.date(),
 			readingTime: z.string(),
 			published: z.boolean(),
+			/** Slug of a src/lab experiment, shown as a card above the note. */
+			lab: z.string().optional(),
 		}),
 	}),
 	work: defineCollection({
@@ -31,7 +33,6 @@ export const collections = {
 			/** The client's live site. */
 			href: z.url(),
 			visitLabel: z.string(),
-			tone: z.enum(['subtle', 'inverse']).optional(),
 			published: z.boolean(),
 		}),
 	}),

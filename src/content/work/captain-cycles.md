@@ -4,7 +4,6 @@ copy: "A service site for a bike repair shop: a lightweight custom WordPress the
 year: '2026'
 href: https://captaincycles.com
 visitLabel: Visit captaincycles.com
-tone: subtle
 published: true
 ---
 

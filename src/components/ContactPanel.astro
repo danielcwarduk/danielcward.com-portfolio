@@ -1,0 +1,14 @@
+---
+/**
+ * ContactPanel — the closing panel shared by the foot of every page except
+ * Contact itself, which renders the same panel as its <h1> with a bio.
+ *
+ * Sources: panel / footer (home, 1152 × 376),
+ *          panel / contact-card (contact, 1072 × 772)
+ */
+
+import Panel from './Panel.astro';
+import { contactFields } from '../data/content';
+---
+
+<Panel title="Get in touch" fields={contactFields} />

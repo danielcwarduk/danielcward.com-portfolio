@@ -8,7 +8,7 @@
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Card from '../../components/Card.astro';
-import ContactLink from '../../components/ContactLink.astro';
+import ContactPanel from '../../components/ContactPanel.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import { demos } from '../../data/collections';
@@ -16,12 +16,12 @@ import { demos } from '../../data/collections';
 
 <BaseLayout
 	title="The Lab"
-	description="Live interactive demos: signed distance fields, colour, type. Built to be poked at."
+	description="Live interactive demos, of either some notes, or just an idea I had."
 >
 	<div class="board">
 		<PageHeader
 			title="The Lab"
-			intro="Interactive demos, left running. They are here to be poked at, not admired."
+			intro="Interactive demos built around an idea or principle I want to demonstrate"
 		/>
 
 		<section class="stack-lg">
@@ -42,7 +42,7 @@ import { demos } from '../../data/collections';
 			</div>
 		</section>
 
-		<ContactLink prompt="Want something like this?" />
+		<ContactPanel />
 	</div>
 </BaseLayout>
 

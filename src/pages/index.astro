@@ -8,11 +8,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Band from '../components/Band.astro';
 import Hero from '../components/Hero.astro';
-import Panel from '../components/Panel.astro';
+import ContactPanel from '../components/ContactPanel.astro';
 import PostCarousel from '../components/PostCarousel.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import { notes } from '../data/collections';
-import { contactFields, site } from '../data/content';
+import { site } from '../data/content';
 ---
 
 <BaseLayout description={site.description}>
@@ -20,7 +20,7 @@ import { contactFields, site } from '../data/content';
 		<Hero
 			heading={site.name}
 			role={site.role}
-			lead="I build websites for people who need them to keep working. Client sites, small tools, and whatever shader thing has my attention this month."
+			lead="I build websites for people who need them to keep working. Client sites, small tools, and whatever experiment has my attention this month."
 			primary={{ label: 'See my work', href: '/work/' }}
 			secondary={{ label: 'Get in touch', href: '/contact/' }}
 		/>
@@ -62,10 +62,6 @@ action={{ label: 'Browse the gallery', href: '/photography/' }}
 		</p>
 		</section>
 
-		<Panel
-			title="What are you working on?"
-			fields={contactFields}
-			cta={{ label: 'Send an email', href: `mailto:${site.email}` }}
-		/>
+		<ContactPanel />
 	</div>
 </BaseLayout>

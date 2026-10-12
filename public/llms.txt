@@ -2,7 +2,7 @@
 
 > Daniel C. Ward is a UK-based web developer, photographer and tinkerer. He
 > designs and builds software for the browser: production client work, small
-> interactive tools, and shader experiments.
+> interactive tools, and small experiments.
 
 This file follows the llms.txt convention: a short orientation for AI systems,
 followed by links to the pages that matter. Everything linked here is public
@@ -12,10 +12,10 @@ and requires no login.
 
 - [Home](https://danielcward.com/): Overview of client work, writing, experiments, and photography.
 - [Client Work](https://danielcward.com/work/): Production projects designed and built end to end. Currently a custom WordPress service site for a bike repair shop and a branded site for a photography and cinematography studio. Both live in production, with case studies for each.
-- [Notes](https://danielcward.com/notes/): Writing on the tools, decisions and dead ends behind the work — front-end architecture, shader programming, and photo archives.
-- [The Lab](https://danielcward.com/lab/): Small interactive studies in shaders, variable typography, OKLCH colour, and layout systems. Work in progress; finished demos are published as their own pages.
+- [Notes](https://danielcward.com/notes/): Writing on the tools, decisions and dead ends behind the work — front-end architecture and photo archives.
+- [The Lab](https://danielcward.com/lab/): Small interactive studies in variable typography, OKLCH colour, and layout systems. Work in progress; finished demos are published as their own pages.
 - [Photography](https://danielcward.com/photography/): Landscapes and street work, shot slowly. Still being built; this page will link to the gallery once it opens.
-- [Contact](https://danielcward.com/contact/): Available for freelance builds, front-end architecture, and client work from October 2026. Email danielcwardprojects@gmail.com.
+- [Contact](https://danielcward.com/contact/): Contact details for questions about the client work, the notes, or anything on this site. Email danielcwardprojects@gmail.com.
 
 ## Elsewhere
 
