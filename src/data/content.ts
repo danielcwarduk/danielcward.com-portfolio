@@ -98,10 +98,10 @@ export const breadcrumbs = (
  * written with the slash rather than normalised at render time.
  */
 export const navLinks = [
+	{ label: 'About', href: '/about-me/' },
 	{ label: 'Work', href: '/work/' },
 	{ label: 'Lab', href: '/lab/' },
 	{ label: 'Notes', href: '/notes/' },
-	{ label: 'Photography', href: '/photography/' },
 	{ label: 'Contact', href: '/contact/' },
 ];
 
