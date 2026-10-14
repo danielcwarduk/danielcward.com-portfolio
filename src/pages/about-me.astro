@@ -1,6 +1,7 @@
 ---
 /**
- * About — profile, selected experience and a printable CV.
+ * About — profile, selected experience and a printable CV for employers and
+ * employer-side clients.
  *
  * The experience below mirrors the current downloadable CV, while keeping the
  * page useful as a short introduction rather than reproducing every detail.
@@ -15,7 +16,7 @@ import { profiles, site } from '../data/content';
 
 const experience = [
 	{
-		role: 'Freelance Web Developer',
+		role: 'Web Developer',
 		company: 'Captain Cycles · Sheffield',
 		period: 'January–May 2026',
 		summary:
@@ -27,7 +28,7 @@ const experience = [
 		],
 	},
 	{
-		role: 'Freelance Web Developer',
+		role: 'Web Developer',
 		company: 'Captain T Productions · Sheffield',
 		period: 'February–June 2026',
 		summary:
@@ -71,21 +72,23 @@ const skills = [
 	<div class="board">
 		<PageHeader
 			title="About me"
-			intro="Web developer and photographer, working from the UK."
+			intro="Web developer and photographer, focused on thoughtful, maintainable work."
 		/>
 
 		<section class="about-intro" aria-labelledby="about-intro-title">
 			<div class="about-intro__copy stack-md">
-				<h2 id="about-intro-title" class="heading-lg">Useful websites, made to last.</h2>
+				<h2 id="about-intro-title" class="heading-lg">Thoughtful, maintainable web work.</h2>
 				<p class="body-md">
-					I build websites for people who need them to be clear, quick and manageable after
-					launch. Most of my client work uses WordPress or Astro, chosen for the project rather
-					than for fashion.
+					I build dependable web experiences and contribute across the development process. My
+					experience covers design handoff, front-end development, WordPress, Astro, deployment
+					and accessibility, with an emphasis on clear communication and reliable results.
 				</p>
 				<p class="body-md">
-					Away from the browser, I make photographs when the light is right. That practice
-					keeps me attentive to composition, restraint and the details that make a page feel
-					considered.
+					I enjoy working from a clear brief, solving unfamiliar problems carefully and being a
+					useful part of a team. I also build small apps and tools, and customise AI-assisted
+					development workflows to support my coding. Outside of development, I enjoy playing
+					instruments and recording music. When I’m away from my MacBook, I take photographs
+					when the light is right; photography keeps me attentive to composition, restraint and detail.
 				</p>
 			</div>
 
@@ -106,7 +109,7 @@ const skills = [
 				</p>
 			</div>
 			<ComingSoonModal
-				label="Visit the photography page "
+				label="Visit the photography page"
 				destination={site.photosUrl}
 				variant="feature"
 			/>
@@ -119,10 +122,9 @@ const skills = [
 				<div class="stack-md">
 					<h3 id="cv-title" class="heading-md">Profile</h3>
 					<p class="body-md">
-						I help small businesses turn their ideas and content into dependable websites.
-						My work covers the design and build, but also the practical details around it:
-						performance, accessibility, deployment and showing clients how to make changes
-						themselves.
+						I build dependable web experiences and contribute across the development process.
+						My experience covers design handoff, front-end development, WordPress, Astro,
+						deployment, accessibility and communicating technical decisions clearly.
 					</p>
 				</div>
 
