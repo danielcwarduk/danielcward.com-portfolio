@@ -7,6 +7,7 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Band from '../components/Band.astro';
+import ComingSoonModal from '../components/ComingSoonModal.astro';
 import Hero from '../components/Hero.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 import PostCarousel from '../components/PostCarousel.astro';
@@ -54,8 +55,13 @@ import { site } from '../data/content';
 		<section class="stack-lg">
 			<SectionHeader
 				title="Also, photos"
-action={{ label: 'Browse the gallery', href: '/photography/' }}
-			/>
+			>
+				<ComingSoonModal
+					slot="action"
+					label="Browse the gallery"
+					destination={site.photosUrl}
+				/>
+			</SectionHeader>
 		<p class="intro body-md">
 			On a different site. Landscapes and street work, shot slowly and edited
 			less than you'd think. That gallery is still being put together.

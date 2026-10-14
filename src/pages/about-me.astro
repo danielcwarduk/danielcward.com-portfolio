@@ -8,9 +8,10 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactPanel from '../components/ContactPanel.astro';
+import ComingSoonModal from '../components/ComingSoonModal.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHeader from '../components/SectionHeader.astro';
-import { profiles } from '../data/content';
+import { profiles, site } from '../data/content';
 
 const experience = [
 	{
@@ -104,9 +105,11 @@ const skills = [
 					it’s ready.
 				</p>
 			</div>
-			<a class="photography-feature__link label-md" href="/photography/">
-				Visit the photography page
-			</a>
+			<ComingSoonModal
+				label="Visit the photography page "
+				destination={site.photosUrl}
+				variant="feature"
+			/>
 		</section>
 
 		<section class="cv-section stack-lg" aria-labelledby="cv-title">
@@ -237,22 +240,6 @@ const skills = [
 		gap: var(--space-xl);
 		padding: clamp(var(--space-xl), 6vw, var(--space-2xl));
 		border-radius: var(--radius-md);
-	}
-
-	.photography-feature__link {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: var(--space-sm) var(--space-lg);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-pill);
-		color: var(--fg);
-		white-space: nowrap;
-		transition: background-color var(--duration-fast) var(--ease-standard);
-	}
-
-	.photography-feature__link:hover {
-		background: #564c22;
 	}
 
 	.cv-download {

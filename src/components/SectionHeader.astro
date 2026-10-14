@@ -21,6 +21,7 @@ const { title, level = 'md', action } = Astro.props;
 	<h2 class:list={[level === 'lg' ? 'heading-lg' : 'display-md']}>{title}</h2>
 
 	{action && <Button href={action.href} variant="inverse">{action.label}</Button>}
+	<slot name="action" />
 </div>
 
 <style>

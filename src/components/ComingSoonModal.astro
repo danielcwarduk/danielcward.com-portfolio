@@ -1,0 +1,156 @@
+---
+interface Props {
+	label: string;
+	destination: string;
+	variant?: 'default' | 'feature';
+}
+
+const { label, destination, variant = 'default' } = Astro.props;
+const modalId = 'photography-coming-soon';
+---
+
+<button
+	type="button"
+	class:list={['coming-soon-trigger', variant === 'feature' && 'coming-soon-trigger--feature']}
+	data-coming-soon-trigger
+	aria-controls={modalId}
+	aria-haspopup="dialog"
+>
+	{label}
+</button>
+
+<dialog class="coming-soon-modal" id={modalId} data-coming-soon-modal aria-labelledby={`${modalId}-title`}>
+	<div class="coming-soon-modal__card">
+		<h2 id={`${modalId}-title`} class="coming-soon-modal__code display-xl">404</h2>
+		<div class="stack-sm">
+			<h3 class="heading-md">Photography isn’t ready yet.</h3>
+			<p class="body-sm">
+				The gallery is being put together and will eventually live at
+				<span class="coming-soon-modal__destination"> {destination}</span>.
+			</p>
+		</div>
+		<button class="coming-soon-modal__close label-md" type="button" data-coming-soon-close>
+			Close
+		</button>
+	</div>
+</dialog>
+
+<script>
+	const triggers = document.querySelectorAll<HTMLButtonElement>('[data-coming-soon-trigger]');
+
+	triggers.forEach((trigger) => {
+		const modalId = trigger.getAttribute('aria-controls');
+		const modal = modalId ? document.getElementById(modalId) : null;
+		const close = modal?.querySelector<HTMLButtonElement>('[data-coming-soon-close]');
+
+		if (!(modal instanceof HTMLDialogElement)) return;
+
+		trigger.addEventListener('click', () => {
+			modal.showModal();
+			close?.focus();
+		});
+
+		close?.addEventListener('click', () => modal.close());
+
+		modal.addEventListener('click', (event) => {
+			if (event.target === modal) modal.close();
+		});
+	});
+</script>
+
+<style>
+	.coming-soon-trigger {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-sm) var(--space-lg);
+		border: 0;
+		border-radius: var(--radius-pill);
+		background: var(--core-olive);
+		color: var(--core-cream);
+		font: inherit;
+		font-size: var(--type-meta-size);
+		line-height: var(--type-meta-line);
+		letter-spacing: var(--tracking-label);
+		text-transform: uppercase;
+		cursor: pointer;
+		transition: filter var(--duration-fast) var(--ease-standard);
+	}
+
+	.coming-soon-trigger:hover {
+		filter: brightness(1.12);
+	}
+
+	.coming-soon-trigger--feature {
+		border: 1px solid var(--border);
+		background: var(--core-cream);
+		color: var(--core-olive);
+	}
+
+	.coming-soon-trigger--feature:hover {
+		filter: brightness(0.96);
+	}
+
+	.coming-soon-modal {
+		--fg-accent-text: #e0ae92;
+		width: min(calc(100% - (2 * var(--layout-gutter))), 560px);
+		padding: 0;
+		border: 0;
+		border-radius: var(--radius-md);
+		background: var(--bg-inverse);
+		color: var(--core-cream);
+	}
+
+	.coming-soon-modal::backdrop {
+		background: rgb(20 24 11 / 72%);
+	}
+
+	.coming-soon-modal__card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-lg);
+		padding: clamp(var(--space-xl), 7vw, var(--space-2xl));
+		animation: coming-soon-scale-in 220ms var(--ease-standard) both;
+	}
+
+	.coming-soon-modal__code {
+		color: var(--core-cream);
+	}
+
+	.coming-soon-modal__destination {
+		color: var(--fg-accent-text);
+		white-space: nowrap;
+	}
+
+	.coming-soon-modal__close {
+		align-self: flex-start;
+		padding: var(--space-sm) var(--space-lg);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-pill);
+		background: transparent;
+		color: var(--core-cream);
+		cursor: pointer;
+		transition: background-color var(--duration-fast) var(--ease-standard);
+	}
+
+	.coming-soon-modal__close:hover {
+		background: #564c22;
+	}
+
+	@keyframes coming-soon-scale-in {
+		from {
+			opacity: 0;
+			transform: scale(0);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.coming-soon-modal__card {
+			animation: none;
+		}
+	}
+</style>

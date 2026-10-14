@@ -13,13 +13,6 @@ export default defineConfig({
 	// host. Canonicals and the sitemap both normalise to match.
 	trailingSlash: 'always',
 	integrations: [
-		sitemap({
-			// Pages that render but must not be indexed — currently the
-			// photography placeholder, which BaseLayout marks noindex. A
-			// noindex URL in the sitemap is a contradiction: it asks a crawler
-			// to index something you have told it to skip. Keep this list in
-			// step with the noindex pages.
-			filter: (page) => !page.includes('/photography/'),
-		}),
+		sitemap(),
 	],
 });
